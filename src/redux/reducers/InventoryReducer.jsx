@@ -6,27 +6,32 @@ const initialState = {
         apples: {
             basePrice: 100,
             demand: 50,
-            supply: 50
+            supply: 50,
+            inventory: 5
         },
         bananas: {
             basePrice: 200,
             demand: 25,
-            supply: 50
+            supply: 50,
+            inventory: 5
         },
         cinnamon: {
             basePrice: 300,
             demand: 50,
-            supply: 25
+            supply: 25,
+            inventory: 5
         },
         dates: {
             basePrice: 400,
             demand: 25,
-            supply: 100
+            supply: 100,
+            inventory: 5
         },
         eggs: {
             basePrice: 500,
             demand: 100,
-            supply: 50
+            supply: 50,
+            inventory: 5
         }
     }
 }
