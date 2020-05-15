@@ -1,13 +1,46 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Turret Road', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-color: Beige;
+}
+
+@font-face {font-family: StitchWarrior; src: url('StitchWarrior-38AX.ttf')}
+
+h1, h2, h3 {
+  font-family: StitchWarrior
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#root {
+  padding: 20px;
+  border:  10px solid DarkRed;
+}
+
+td {
+  border: 1px dashed cadetblue;
+  padding: 5px;
+}
+
+thead tr th{
+  font-size: x-large;
+  font-family: StitchWarrior;
+  padding-right: 10px;
+}
+
+/* Colors 
+Beige
+Brown
+CadetBlue
+DarkRed
+GoldenRod
+
+*/
