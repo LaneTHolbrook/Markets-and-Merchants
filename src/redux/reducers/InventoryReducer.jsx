@@ -1,36 +1,38 @@
-import { CASH_ON_HAND, MARKET_GOODS } from '../actions/InventoryActions'
+import { CASH_ON_HAND, MARKET_GOODS, POPULATION, CARAVAN_ARRIVED } from '../actions/InventoryActions'
 
 const initialState = {
+    caravanArrived: false,
     cashOnHand: 0,
+    population: 500,
     marketGoods: {
         apples: {
             basePrice: 100,
-            demand: 50,
-            supply: 50,
+            demand: 500,
+            supply: 500,
             inventory: 5
         },
         bananas: {
             basePrice: 200,
-            demand: 25,
-            supply: 50,
+            demand: 500,
+            supply: 500,
             inventory: 5
         },
         cinnamon: {
             basePrice: 300,
-            demand: 50,
-            supply: 25,
+            demand: 500,
+            supply: 500,
             inventory: 5
         },
         dates: {
             basePrice: 400,
-            demand: 25,
-            supply: 100,
+            demand: 500,
+            supply: 500,
             inventory: 5
         },
         eggs: {
             basePrice: 500,
-            demand: 100,
-            supply: 50,
+            demand: 500,
+            supply: 500,
             inventory: 5
         }
     }
@@ -47,6 +49,16 @@ export default function InventoryReducer(state = initialState, action = {type: n
             return {
                 ...state,
                 marketGoods: action.payload
+            }
+        case POPULATION:
+            return {
+                ...state,
+                population: action.payload
+            }
+        case CARAVAN_ARRIVED:
+            return {
+                ...state,
+                caravanArrived: action.payload
             }
         default: return {...state};
     }
