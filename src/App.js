@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import TransactionManager from './pages/TransactionManager'
+import TransactionManager from './components/TransactionManager'
 
 function App() {
   return (
