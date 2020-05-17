@@ -1,43 +1,20 @@
-import { CASH_ON_HAND, MARKET_GOODS } from '../actions/InventoryActions'
+import { CASH_ON_HAND,
+    MARKET_GOODS,
+    POPULATION,
+    CARAVAN_ARRIVED,
+    MAX_TRANSACTIONS_AVAILABLE,
+    RESET_TRANSACTIONS,
+    TRANSACTIONS_AVAILABLE,
+    STATE
+} from '../actions/InventoryActions'
+import marketState from '../../data/marketState.json'
 
-const initialState = {
-    cashOnHand: 0,
-    marketGoods: {
-        apples: {
-            basePrice: 100,
-            demand: 50,
-            supply: 50,
-            inventory: 5
-        },
-        bananas: {
-            basePrice: 200,
-            demand: 25,
-            supply: 50,
-            inventory: 5
-        },
-        cinnamon: {
-            basePrice: 300,
-            demand: 50,
-            supply: 25,
-            inventory: 5
-        },
-        dates: {
-            basePrice: 400,
-            demand: 25,
-            supply: 100,
-            inventory: 5
-        },
-        eggs: {
-            basePrice: 500,
-            demand: 100,
-            supply: 50,
-            inventory: 5
-        }
-    }
-}
+const initialState = marketState;
 
 export default function InventoryReducer(state = initialState, action = {type: null}) {
     switch (action.type) {
+        case STATE:
+            return action.payload;
         case CASH_ON_HAND:
             return  {
                 ...state,
@@ -48,6 +25,31 @@ export default function InventoryReducer(state = initialState, action = {type: n
                 ...state,
                 marketGoods: action.payload
             }
+        case POPULATION:
+            return {
+                ...state,
+                population: action.payload
+            }
+        case CARAVAN_ARRIVED:
+            return {
+                ...state,
+                caravanArrived: action.payload
+            }
+        case MAX_TRANSACTIONS_AVAILABLE:
+            return  {
+                ...state,
+                maxTransactions: action.payload
+            };
+        case TRANSACTIONS_AVAILABLE:
+            return  {
+                ...state,
+                transactionsAvailable: action.payload
+            };
+        case RESET_TRANSACTIONS:
+            return  {
+                ...state,
+                transactionsAvailable: state.maxTransactions
+            };
         default: return {...state};
     }
 }
