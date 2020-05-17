@@ -1,7 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setCashOnHand, setMarketGoods, setCaravanArrived } from '../redux/actions/InventoryActions';
-import { setTransactionsAvailable } from '../redux/actions/MarketplaceActions';
+import { setCashOnHand,
+    setMarketGoods,
+    setCaravanArrived,
+    resetTransactionsAvailable,
+    setTransactionsAvailable,
+    setState
+ } from '../redux/actions/InventoryActions';
 import { nextDay } from './dayFunctions';
 
 let marketValue = props => {
@@ -43,10 +48,26 @@ let goodsList = props => {
     return (output);
 }
 
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}
+
 class TransactionManager extends React.Component {
 
-    render() {
+    onFileChange = event => {
+            const reader = new FileReader();
+            reader.addEventListener('load', (event) => {
+                this.props.setState(JSON.parse(event.target.result));
+            });
+            reader.readAsText(event.target.files[0]);
+            event.target.value = "";
+      };
 
+    render() {
         return (
             <div>
                 <table>
@@ -66,17 +87,28 @@ class TransactionManager extends React.Component {
                     </tbody>
                 </table>
                 <div>You have ${this.props.cashOnHand} and {this.props.transactionsAvailable} transactions available!</div> 
-                <button type="button" onClick={() =>
+                <button type="button" onClick={() => 
                     nextDay({
                         population: this.props.population,
                         marketGoods: this.props.marketGoods, 
                         setCaravanArrived: this.props.setCaravanArrived,
                         setMarketGoods: this.props.setMarketGoods,
-                        setTransactionsAvailable: this.props.setTransactionsAvailable}
-                        )}>
+                        resetTransactionsAvailable: this.props.resetTransactionsAvailable}
+                    )}>
                             Next Day
                 </button>
                 <br/>
+                <br/>
+                <br/>   
+                <button class="file-io-button" type="button" onClick={() => download(JSON.stringify(this.props.state), 'marketState.json', 'application/json')}>
+                    Download market state
+                </button>
+                <br/>
+                <br/>
+                <label for="file-upload" class="file-io-button">
+                    <input id="file-upload" type="file" onChange={this.onFileChange}/> 
+                    Upload previous market state
+                </label>
                 <br/>
                 <br/>
                 {this.props.caravanArrived ? "A Caravan has arrived bearing fresh goods!" : null}
@@ -87,19 +119,22 @@ class TransactionManager extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-      cashOnHand: state.inventory.cashOnHand,
-      transactionsAvailable: state.market.transactionsAvailable,
-      marketGoods: state.inventory.marketGoods,
-      population: state.inventory.population,
-      caravanArrived: state.inventory.caravanArrived
+      cashOnHand: state.cashOnHand,
+      transactionsAvailable: state.transactionsAvailable,
+      marketGoods: state.marketGoods,
+      population: state.population,
+      caravanArrived: state.caravanArrived,
+      state: state
     }
   }
   
   const mapDispatchToProps = { 
       setCashOnHand, 
+      resetTransactionsAvailable,
       setTransactionsAvailable, 
       setMarketGoods, 
-      setCaravanArrived 
+      setCaravanArrived,
+      setState
     }
   
   export default connect(

@@ -1,13 +1,17 @@
-export function rollD6() {
-        let result = Math.floor(Math.random() * 6);
-        return result + 1;
+export function rollD6(dice = 1) {
+    let result = 0;
+    var i;
+    for (i = 0; i < dice; i++) {
+        result += Math.floor(Math.random() * 6) + 1;
+    }
+        return result;
     }
 
 export function calculateDemand(currentPop) {
 
     let result = currentPop;
 
-    let roll = rollD6() + rollD6() + rollD6();
+    let roll = rollD6(3);
 
     switch(roll) {
         case 3: {
@@ -79,7 +83,7 @@ export function calculateDemand(currentPop) {
         }
     }
 
-    result = Math.round(result + (rollD6() - 1));
+    result = Math.round(result);
 
     return result;
     }
@@ -87,7 +91,7 @@ export function calculateDemand(currentPop) {
 export function calculateSupply(currentPop) {  
     let result = currentPop;
 
-    let roll = rollD6() + rollD6() + rollD6();
+    let roll = rollD6(3);
 
     switch(roll) {
         case 3: {
@@ -280,5 +284,5 @@ export function nextDay(props) {
             setMarketGoods: props.setMarketGoods,
             setCaravanArrived: props.setCaravanArrived
         });
-        props.setTransactionsAvailable(5);
+        props.resetTransactionsAvailable();
     }
