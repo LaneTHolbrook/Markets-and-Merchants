@@ -5,35 +5,196 @@
     "maxTransactions": 5,
     "population": 500,
     "marketGoods": {
-        "apples": {
+        "silk": {
             "basePrice": 100,
             "demand": 500,
             "supply": 500,
             "inventory": 5,
             "rarity": -5
         },
-        "bananas": {
+        "wool": {
             "basePrice": 200,
             "demand": 500,
             "supply": 500,
             "inventory": 5,
             "rarity": -2
         },
-        "cinnamon": {
+        "cotton": {
             "basePrice": 300,
             "demand": 500,
             "supply": 500,
             "inventory": 5,
             "rarity": 0
         },
-        "dates": {
+        "linen": {
             "basePrice": 400,
             "demand": 500,
             "supply": 500,
             "inventory": 5,
             "rarity": 0
         },
-        "eggs": {
+        "gold": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "glass": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "gemstones": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "coffee": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "chickens": {
+            "basePrice": 100,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": -5
+        },
+        "goats": {
+            "basePrice": 200,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": -2
+        },
+        "pigs": {
+            "basePrice": 300,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "exotic animals": {
+            "basePrice": 400,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "wood": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "stone": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "copper": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "iron": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "winter mint": {
+            "basePrice": 100,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": -5
+        },
+        "summer spice": {
+            "basePrice": 200,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": -2
+        },
+        "harvest truffle": {
+            "basePrice": 300,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "spring down": {
+            "basePrice": 400,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "swords": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "knives": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "bows": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "polearms": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "shields": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "leathers": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "chainmail": {
+            "basePrice": 500,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 5,
+            "rarity": 0
+        },
+        "platemail": {
             "basePrice": 500,
             "demand": 500,
             "supply": 500,
