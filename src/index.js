@@ -5,11 +5,9 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import InventoryReducer from './redux/reducers/InventoryReducer'
-import MarketplaceReducer from './redux/reducers/MarketplaceReducer'
 import App from './App'
-import { combineReducers } from 'redux'
 
-const store = createStore(combineReducers({inventory: InventoryReducer, market: MarketplaceReducer}));
+const store = createStore(InventoryReducer);
 
 const rootElement = document.getElementById('root')
 ReactDOM.render(

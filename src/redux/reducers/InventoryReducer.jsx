@@ -1,45 +1,20 @@
-import { CASH_ON_HAND, MARKET_GOODS, POPULATION, CARAVAN_ARRIVED } from '../actions/InventoryActions'
+import { CASH_ON_HAND,
+    MARKET_GOODS,
+    POPULATION,
+    CARAVAN_ARRIVED,
+    MAX_TRANSACTIONS_AVAILABLE,
+    RESET_TRANSACTIONS,
+    TRANSACTIONS_AVAILABLE,
+    STATE
+} from '../actions/InventoryActions'
+import marketState from '../../data/marketState.json'
 
-const initialState = {
-    caravanArrived: false,
-    cashOnHand: 0,
-    population: 500,
-    marketGoods: {
-        apples: {
-            basePrice: 100,
-            demand: 500,
-            supply: 500,
-            inventory: 5
-        },
-        bananas: {
-            basePrice: 200,
-            demand: 500,
-            supply: 500,
-            inventory: 5
-        },
-        cinnamon: {
-            basePrice: 300,
-            demand: 500,
-            supply: 500,
-            inventory: 5
-        },
-        dates: {
-            basePrice: 400,
-            demand: 500,
-            supply: 500,
-            inventory: 5
-        },
-        eggs: {
-            basePrice: 500,
-            demand: 500,
-            supply: 500,
-            inventory: 5
-        }
-    }
-}
+const initialState = marketState;
 
 export default function InventoryReducer(state = initialState, action = {type: null}) {
     switch (action.type) {
+        case STATE:
+            return action.payload;
         case CASH_ON_HAND:
             return  {
                 ...state,
@@ -60,6 +35,21 @@ export default function InventoryReducer(state = initialState, action = {type: n
                 ...state,
                 caravanArrived: action.payload
             }
+        case MAX_TRANSACTIONS_AVAILABLE:
+            return  {
+                ...state,
+                maxTransactions: action.payload
+            };
+        case TRANSACTIONS_AVAILABLE:
+            return  {
+                ...state,
+                transactionsAvailable: action.payload
+            };
+        case RESET_TRANSACTIONS:
+            return  {
+                ...state,
+                transactionsAvailable: state.maxTransactions
+            };
         default: return {...state};
     }
 }
