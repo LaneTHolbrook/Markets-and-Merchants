@@ -234,12 +234,9 @@ export function caravan(props) {
 
 function getShipmentSize(props) {
 
-    if (props.supply > props.demand) {
-        return 0;
-    }
-
     let baseSize = props.demand - props.supply;
     if (baseSize > props.pop) baseSize = props.pop;
+    if (baseSize < -props.pop) baseSize = -props.pop;
     let finalSize = props.pop;
 
     switch(rollD6(3)) {
@@ -321,7 +318,7 @@ export function nextDay(props) {
     let names = Object.keys(props.marketGoods);
     names.forEach(good => {
         let newSupply = props.marketGoods[good].supply + calculateSupplyChange({availability: props.marketGoods[good].availability, pop: props.population});
-        if (newSupply < 0) {newSupply = 0};
+        if (newSupply < Math.floor(props.population * .1)) {newSupply = Math.floor(props.population * .1)};
         output[good] = {
             ...props.marketGoods[good],
             demand: calculateDemand({currentDemand: props.marketGoods[good].demand, currentPop: props.population}),

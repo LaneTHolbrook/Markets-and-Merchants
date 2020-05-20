@@ -18,7 +18,6 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 let marketValue = props => {
     let modifier = ((1+props.demand) / (1+props.supply));
     if (modifier < 0.5) {modifier = 0.5};
-    if (modifier > 10) {modifier = 10};
     return Math.floor(props.base * modifier);
 }
 
@@ -30,8 +29,8 @@ let goodsList = props => {
             <td>{good}</td>
             <td>{props.goods[good].inventory}</td>
             <td>{value}</td>
-            <td>{props.goods[good].supply}</td>
-            <td>{props.goods[good].demand}</td>
+            <td>{props.testing ? props.goods[good].supply : null}</td>
+            <td>{props.testing ? props.goods[good].demand : null}</td>
             <td><button type="button" onClick={() => {
                     if (props.transactionsAvailable > 0 && props.cashOnHand >= value && props.goods[good].supply > 0){
                         props.setCashOnHand(props.cashOnHand - value);
@@ -76,7 +75,9 @@ let caravanMetrics = props => {
     </div>
 }
 
-function download(content, fileName, contentType) {
+function download(state, fileName, contentType) {
+    let content = {...state, date: state.date.toJSON()}
+    content = JSON.stringify(content);
     var a = document.createElement("a");
     var file = new Blob([content], {type: contentType});
     a.href = URL.createObjectURL(file);
@@ -89,17 +90,20 @@ class TransactionManager extends React.Component {
     onFileChange = event => {
             const reader = new FileReader();
             reader.addEventListener('load', (event) => {
-                this.props.setState(JSON.parse(event.target.result));
+                let newState = JSON.parse(event.target.result);
+                newState = {...newState, date: new Date(newState.date)}
+                this.props.setState(newState);
             });
             reader.readAsText(event.target.files[0]);
             event.target.value = "";
       };
 
     render() {
+        const testing = false;
         const chartOptions = {
 			theme: "light2",
 			title: {
-				text: "Supply of silk over time"
+				text: "price of goods at various rarities over time"
 			},
 			axisY: {
 				title: "Units silk",
@@ -110,22 +114,22 @@ class TransactionManager extends React.Component {
                 fontColor: 'green'
             },
 			data: [{
-            //     type: "line",
-            //     lineColor: 'red',
-			// 	xValueFormatString: "MMM YYYY",
-            //     yValueFormatString: "$#,##0.00",
-            //     name: "silk",
-			// 	dataPoints: this.props.analytics.silk
-            // },
-            // {
-            //     type: "line",
-            //     lineColor: 'orange',
-			// 	xValueFormatString: "MMM YYYY",
-            //     yValueFormatString: "$#,##0.00",
-            //     name: "cotton",
-			// 	dataPoints: this.props.analytics.cotton
-            // },
-            // {
+                type: "line",
+                lineColor: 'red',
+				xValueFormatString: "MMM YYYY",
+                yValueFormatString: "$#,##0.00",
+                name: "silk",
+				dataPoints: this.props.analytics.silk
+            },
+            {
+                type: "line",
+                lineColor: 'orange',
+				xValueFormatString: "MMM YYYY",
+                yValueFormatString: "$#,##0.00",
+                name: "cotton",
+				dataPoints: this.props.analytics.cotton
+            },
+            {
                 type: "line",
                 lineColor: 'yellow',
 				xValueFormatString: "MMM YYYY",
@@ -133,22 +137,22 @@ class TransactionManager extends React.Component {
                 name: "stone",
 				dataPoints: this.props.analytics.stone
             },
-            // {
-            //     type: "line",
-            //     lineColor: 'green',
-			// 	xValueFormatString: "MMM YYYY",
-            //     yValueFormatString: "$#,##0.00",
-            //     name: "chickens",
-			// 	dataPoints: this.props.analytics.chickens
-            // },
-            // {
-            //     type: "line",
-            //     lineColor: 'blue',
-			// 	xValueFormatString: "MMM YYYY",
-            //     yValueFormatString: "$#,##0.00",
-            //     name: "pigs",
-			// 	dataPoints: this.props.analytics.pigs
-            // }
+            {
+                type: "line",
+                lineColor: 'green',
+				xValueFormatString: "MMM YYYY",
+                yValueFormatString: "$#,##0.00",
+                name: "chickens",
+				dataPoints: this.props.analytics.chickens
+            },
+            {
+                type: "line",
+                lineColor: 'blue',
+				xValueFormatString: "MMM YYYY",
+                yValueFormatString: "$#,##0.00",
+                name: "pigs",
+				dataPoints: this.props.analytics.pigs
+            }
         ]
 		}
 
@@ -160,15 +164,16 @@ class TransactionManager extends React.Component {
                         <th>Name</th>
                         <th>inventory</th>
                         <th>price</th>
-                        <th>supply</th>
-                        <th>demand</th>
+                        {testing ? <th>supply</th> : null}
+                        {testing ? <th>demand</th> : null}
                     </tr></thead>
                     <tbody>{goodsList({goods: this.props.marketGoods, 
                         transactionsAvailable: this.props.transactionsAvailable, 
                         cashOnHand: this.props.cashOnHand,
                         setCashOnHand: this.props.setCashOnHand, 
                         setTransactionsAvailable: this.props.setTransactionsAvailable,
-                        setMarketGoods: this.props.setMarketGoods})}
+                        setMarketGoods: this.props.setMarketGoods,
+                        testing: testing})}
                     </tbody>
                 </table>
                 <div>You have ${this.props.cashOnHand} and {this.props.transactionsAvailable} transactions available!</div> 
@@ -186,7 +191,7 @@ class TransactionManager extends React.Component {
                 <br/>
                 <br/>
                 <br/>   
-                <button className="file-io-button" type="button" onClick={() => download(JSON.stringify(this.props.state), 'marketState.json', 'application/json')}>
+                <button className="file-io-button" type="button" onClick={() => download(this.props.state, 'marketState.json', 'application/json')}>
                     Download market state
                 </button>
                 <br/>
@@ -201,11 +206,11 @@ class TransactionManager extends React.Component {
                 <br/>
                 <br/>
                 <br/>
-                <div>
+                {testing ? <div>
                     <CanvasJSChart options = {chartOptions} ref={this.chart}
                         // onRef = {ref => this.chart = ref}
                     />
-                </div>
+                </div> : null}
             </div>
         );
     }
