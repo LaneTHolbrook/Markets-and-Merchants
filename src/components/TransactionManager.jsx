@@ -2,90 +2,28 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setCashOnHand,
     setMarketGoods,
-    setCaravanArrived,
-    resetTransactionsAvailable,
     setTransactionsAvailable,
-    setState,
-    setDateToNextDay
+    setState
  } from '../redux/actions/InventoryActions';
-import { nextDay } from './dayFunctions';
+import NextDayButton from './nextDayButton';
+import {testing, marketValue} from '../utils'
 
 import CanvasJSReact from '../canvasjs.react';
 //var CanvasJSReact = require('./canvasjs.react');
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-let marketValue = props => {
-    let modifier = ((1+props.demand) / (1+props.supply));
-    if (modifier < 0.5) {modifier = 0.5};
-    return Math.floor(props.base * modifier);
-}
-
-let goodsList = props => {
-    let names = Object.keys(props.goods);
-    let output = names.map(good => {
-        let value = marketValue({base: props.goods[good].basePrice, supply: props.goods[good].supply, demand: props.goods[good].demand});
-        return <tr key = {good}>
-            <td>{good}</td>
-            <td>{props.goods[good].inventory}</td>
-            <td>{value}</td>
-            <td>{props.testing ? props.goods[good].supply : null}</td>
-            <td>{props.testing ? props.goods[good].demand : null}</td>
-            <td><button type="button" onClick={() => {
-                    if (props.transactionsAvailable > 0 && props.cashOnHand >= value && props.goods[good].supply > 0){
-                        props.setCashOnHand(props.cashOnHand - value);
-                        props.setTransactionsAvailable(props.transactionsAvailable - 1)
-                        let newGoods = props.goods;
-                        newGoods[good].inventory++;
-                        props.setMarketGoods(newGoods);
-                    }
-                }}>buy!</button></td>
-            <td><button type="button" onClick={() => {
-                    if (props.transactionsAvailable > 0 && props.goods[good].inventory > 0){
-                        props.setCashOnHand(props.cashOnHand + value);
-                        props.setTransactionsAvailable(props.transactionsAvailable - 1)
-                        let newGoods = props.goods;
-                        newGoods[good].inventory--;
-                        props.setMarketGoods(newGoods);
-                    }
-                }}>sell!</button></td>
-        </tr>
-    });
-    return (output);
-}
-
-let caravanMetrics = props => {
-    let shipmentDetails = props.shipments.map(shipment =>{
-        return <tr key = {shipment.key}>
-            <td>{shipment.good}</td>
-            <td>{shipment.size}</td>
-        </tr>
-    });
-    return <div>
-        A Caravan has arrived bearing {props.size} fresh shipments of goods!
-        <table>
-            <thead><tr>
-                <th>good</th>
-                <th>unit</th>
-            </tr></thead>
-            <tbody>
-                {shipmentDetails}
-            </tbody>
-        </table>
-    </div>
-}
-
-function download(state, fileName, contentType) {
-    let content = {...state, date: state.date.toJSON()}
-    content = JSON.stringify(content);
-    var a = document.createElement("a");
-    var file = new Blob([content], {type: contentType});
-    a.href = URL.createObjectURL(file);
-    a.download = fileName;
-    a.click();
-}
-
 class TransactionManager extends React.Component {
+
+    download(state, fileName, contentType) {
+        let content = {...state, date: state.date.toJSON()}
+        content = JSON.stringify(content);
+        var a = document.createElement("a");
+        var file = new Blob([content], {type: contentType});
+        a.href = URL.createObjectURL(file);
+        a.download = fileName;
+        a.click();
+    }
 
     onFileChange = event => {
             const reader = new FileReader();
@@ -96,65 +34,100 @@ class TransactionManager extends React.Component {
             });
             reader.readAsText(event.target.files[0]);
             event.target.value = "";
-      };
+    };
+
+    goodsList = () => {
+        let names = Object.keys(this.props.marketGoods);
+        let output = names.map(good => {
+            let value = marketValue({base: this.props.marketGoods[good].basePrice, supply: this.props.marketGoods[good].supply, demand: this.props.marketGoods[good].demand});
+            return <tr key = {good}>
+                <td>{good}</td>
+                <td>{this.props.marketGoods[good].inventory}</td>
+                <td>{value}</td>
+                <td>{testing ? this.props.marketGoods[good].supply : null}</td>
+                <td>{testing ? this.props.marketGoods[good].demand : null}</td>
+                <td><button type="button" onClick={() => {
+                        if (this.props.transactionsAvailable > 0 && this.props.cashOnHand >= value && this.props.marketGoods[good].supply > 0){
+                            this.props.setCashOnHand(this.props.cashOnHand - value);
+                            this.props.setTransactionsAvailable(this.props.transactionsAvailable - 1)
+                            let newGoods = this.props.marketGoods;
+                            newGoods[good].inventory++;
+                            this.props.setMarketGoods(newGoods);
+                        }
+                    }}>buy!</button></td>
+                <td><button type="button" onClick={() => {
+                        if (this.props.transactionsAvailable > 0 && this.props.marketGoods[good].inventory > 0){
+                            this.props.setCashOnHand(this.props.cashOnHand + value);
+                            this.props.setTransactionsAvailable(this.props.transactionsAvailable - 1)
+                            let newGoods = this.props.marketGoods;
+                            newGoods[good].inventory--;
+                            this.props.setMarketGoods(newGoods);
+                        }
+                    }}>sell!</button></td>
+            </tr>
+        });
+        return (output);
+    }
 
     render() {
-        const testing = false;
-        const chartOptions = {
-			theme: "light2",
-			title: {
-				text: "price of goods at various rarities over time"
-			},
-			axisY: {
-				title: "Units silk",
-				prefix: "$",
-				includeZero: true
-            },
-            legend: {
-                fontColor: 'green'
-            },
-			data: [{
-                type: "line",
-                lineColor: 'red',
-				xValueFormatString: "MMM YYYY",
-                yValueFormatString: "$#,##0.00",
-                name: "silk",
-				dataPoints: this.props.analytics.silk
-            },
-            {
-                type: "line",
-                lineColor: 'orange',
-				xValueFormatString: "MMM YYYY",
-                yValueFormatString: "$#,##0.00",
-                name: "cotton",
-				dataPoints: this.props.analytics.cotton
-            },
-            {
-                type: "line",
-                lineColor: 'yellow',
-				xValueFormatString: "MMM YYYY",
-                yValueFormatString: "$#,##0.00",
-                name: "stone",
-				dataPoints: this.props.analytics.stone
-            },
-            {
-                type: "line",
-                lineColor: 'green',
-				xValueFormatString: "MMM YYYY",
-                yValueFormatString: "$#,##0.00",
-                name: "chickens",
-				dataPoints: this.props.analytics.chickens
-            },
-            {
-                type: "line",
-                lineColor: 'blue',
-				xValueFormatString: "MMM YYYY",
-                yValueFormatString: "$#,##0.00",
-                name: "pigs",
-				dataPoints: this.props.analytics.pigs
+        var chartOptions = {}
+        if (testing) {
+            chartOptions = {
+                theme: "light2",
+                title: {
+                    text: "price of goods at various rarities over time"
+                },
+                axisY: {
+                    title: "dollar value per unit",
+                    prefix: "$",
+                    includeZero: true
+                },
+                legend: {
+                    fontColor: 'green'
+                },
+                data: [{
+                    type: "line",
+                    lineColor: 'red',
+                    xValueFormatString: "MMM YYYY",
+                    yValueFormatString: "$#,##0.00",
+                    name: "silk",
+                    dataPoints: this.props.analytics.silk
+                },
+                {
+                    type: "line",
+                    lineColor: 'orange',
+                    xValueFormatString: "MMM YYYY",
+                    yValueFormatString: "$#,##0.00",
+                    name: "cotton",
+                    dataPoints: this.props.analytics.cotton
+                },
+                {
+                    type: "line",
+                    lineColor: 'yellow',
+                    xValueFormatString: "MMM YYYY",
+                    yValueFormatString: "$#,##0.00",
+                    name: "stone",
+                    dataPoints: this.props.analytics.stone
+                },
+                {
+                    type: "line",
+                    lineColor: 'green',
+                    xValueFormatString: "MMM YYYY",
+                    yValueFormatString: "$#,##0.00",
+                    name: "chickens",
+                    dataPoints: this.props.analytics.chickens
+                },
+                {
+                    type: "line",
+                    lineColor: 'blue',
+                    xValueFormatString: "MMM YYYY",
+                    yValueFormatString: "$#,##0.00",
+                    name: "pigs",
+                    dataPoints: this.props.analytics.pigs
+                }
+            ]
             }
-        ]
-		}
+        }
 
         return (
             <div>
@@ -167,31 +140,15 @@ class TransactionManager extends React.Component {
                         {testing ? <th>supply</th> : null}
                         {testing ? <th>demand</th> : null}
                     </tr></thead>
-                    <tbody>{goodsList({goods: this.props.marketGoods, 
-                        transactionsAvailable: this.props.transactionsAvailable, 
-                        cashOnHand: this.props.cashOnHand,
-                        setCashOnHand: this.props.setCashOnHand, 
-                        setTransactionsAvailable: this.props.setTransactionsAvailable,
-                        setMarketGoods: this.props.setMarketGoods,
-                        testing: testing})}
+                    <tbody>{this.goodsList()}
                     </tbody>
                 </table>
                 <div>You have ${this.props.cashOnHand} and {this.props.transactionsAvailable} transactions available!</div> 
-                <button type="button" onClick={() => 
-                    nextDay({
-                        population: this.props.population,
-                        marketGoods: this.props.marketGoods, 
-                        setCaravanArrived: this.props.setCaravanArrived,
-                        setMarketGoods: this.props.setMarketGoods,
-                        resetTransactionsAvailable: this.props.resetTransactionsAvailable,
-                        setDateToNextDay: this.props.setDateToNextDay}
-                    )}>
-                            Next Day
-                </button>
+                <NextDayButton/>
                 <br/>
                 <br/>
                 <br/>   
-                <button className="file-io-button" type="button" onClick={() => download(this.props.state, 'marketState.json', 'application/json')}>
+                <button className="file-io-button" type="button" onClick={() => this.download(this.props.state, 'marketState.json', 'application/json')}>
                     Download market state
                 </button>
                 <br/>
@@ -221,7 +178,6 @@ const mapStateToProps = (state) => {
       cashOnHand: state.cashOnHand,
       transactionsAvailable: state.transactionsAvailable,
       marketGoods: state.marketGoods,
-      population: state.population,
       caravanArrived: state.caravanArrived,
       date: state.date,
       state: state,
@@ -230,13 +186,10 @@ const mapStateToProps = (state) => {
   }
   
   const mapDispatchToProps = { 
-      setCashOnHand, 
-      resetTransactionsAvailable,
+      setCashOnHand,
       setTransactionsAvailable, 
-      setMarketGoods, 
-      setCaravanArrived,
-      setState,
-      setDateToNextDay
+      setMarketGoods,
+      setState
     }
   
   export default connect(
