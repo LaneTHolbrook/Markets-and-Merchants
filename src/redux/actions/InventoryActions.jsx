@@ -6,11 +6,19 @@ export const MAX_TRANSACTIONS_AVAILABLE = "MAX_TRANSACTIONS_AVAILABLE"
 export const RESET_TRANSACTIONS = "RESET_TRANSACTIONS"
 export const TRANSACTIONS_AVAILABLE = "TRANSACTIONS_AVAILABLE"
 export const STATE = "STATE"
+export const DATE = "DATE"
 
 export function setState(state) {
     return {
         type: STATE,
         payload: state
+    }
+}
+
+export function setDateToNextDay() {
+    return {
+        type: DATE,
+        payload: null
     }
 }
 

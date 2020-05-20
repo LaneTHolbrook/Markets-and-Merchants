@@ -5,13 +5,20 @@ import { setCashOnHand,
     setCaravanArrived,
     resetTransactionsAvailable,
     setTransactionsAvailable,
-    setState
+    setState,
+    setDateToNextDay
  } from '../redux/actions/InventoryActions';
 import { nextDay } from './dayFunctions';
 
+import CanvasJSReact from '../canvasjs.react';
+//var CanvasJSReact = require('./canvasjs.react');
+var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 let marketValue = props => {
-    let modifier = 1 + ((props.demand - props.supply) / 100);
+    let modifier = ((1+props.demand) / (1+props.supply));
     if (modifier < 0.5) {modifier = 0.5};
+    if (modifier > 10) {modifier = 10};
     return Math.floor(props.base * modifier);
 }
 
@@ -48,6 +55,27 @@ let goodsList = props => {
     return (output);
 }
 
+let caravanMetrics = props => {
+    let shipmentDetails = props.shipments.map(shipment =>{
+        return <tr key = {shipment.key}>
+            <td>{shipment.good}</td>
+            <td>{shipment.size}</td>
+        </tr>
+    });
+    return <div>
+        A Caravan has arrived bearing {props.size} fresh shipments of goods!
+        <table>
+            <thead><tr>
+                <th>good</th>
+                <th>unit</th>
+            </tr></thead>
+            <tbody>
+                {shipmentDetails}
+            </tbody>
+        </table>
+    </div>
+}
+
 function download(content, fileName, contentType) {
     var a = document.createElement("a");
     var file = new Blob([content], {type: contentType});
@@ -68,8 +96,65 @@ class TransactionManager extends React.Component {
       };
 
     render() {
+        const chartOptions = {
+			theme: "light2",
+			title: {
+				text: "Supply of silk over time"
+			},
+			axisY: {
+				title: "Units silk",
+				prefix: "$",
+				includeZero: true
+            },
+            legend: {
+                fontColor: 'green'
+            },
+			data: [{
+            //     type: "line",
+            //     lineColor: 'red',
+			// 	xValueFormatString: "MMM YYYY",
+            //     yValueFormatString: "$#,##0.00",
+            //     name: "silk",
+			// 	dataPoints: this.props.analytics.silk
+            // },
+            // {
+            //     type: "line",
+            //     lineColor: 'orange',
+			// 	xValueFormatString: "MMM YYYY",
+            //     yValueFormatString: "$#,##0.00",
+            //     name: "cotton",
+			// 	dataPoints: this.props.analytics.cotton
+            // },
+            // {
+                type: "line",
+                lineColor: 'yellow',
+				xValueFormatString: "MMM YYYY",
+                yValueFormatString: "$#,##0.00",
+                name: "stone",
+				dataPoints: this.props.analytics.stone
+            },
+            // {
+            //     type: "line",
+            //     lineColor: 'green',
+			// 	xValueFormatString: "MMM YYYY",
+            //     yValueFormatString: "$#,##0.00",
+            //     name: "chickens",
+			// 	dataPoints: this.props.analytics.chickens
+            // },
+            // {
+            //     type: "line",
+            //     lineColor: 'blue',
+			// 	xValueFormatString: "MMM YYYY",
+            //     yValueFormatString: "$#,##0.00",
+            //     name: "pigs",
+			// 	dataPoints: this.props.analytics.pigs
+            // }
+        ]
+		}
+
         return (
             <div>
+                <div>Today is {this.props.date.toDateString()}</div>
                 <table>
                     <thead><tr>
                         <th>Name</th>
@@ -93,25 +178,34 @@ class TransactionManager extends React.Component {
                         marketGoods: this.props.marketGoods, 
                         setCaravanArrived: this.props.setCaravanArrived,
                         setMarketGoods: this.props.setMarketGoods,
-                        resetTransactionsAvailable: this.props.resetTransactionsAvailable}
+                        resetTransactionsAvailable: this.props.resetTransactionsAvailable,
+                        setDateToNextDay: this.props.setDateToNextDay}
                     )}>
                             Next Day
                 </button>
                 <br/>
                 <br/>
                 <br/>   
-                <button class="file-io-button" type="button" onClick={() => download(JSON.stringify(this.props.state), 'marketState.json', 'application/json')}>
+                <button className="file-io-button" type="button" onClick={() => download(JSON.stringify(this.props.state), 'marketState.json', 'application/json')}>
                     Download market state
                 </button>
                 <br/>
                 <br/>
-                <label for="file-upload" class="file-io-button">
+                <label htmlFor="file-upload" className="file-io-button">
                     <input id="file-upload" type="file" onChange={this.onFileChange}/> 
                     Upload previous market state
                 </label>
                 <br/>
                 <br/>
-                {this.props.caravanArrived ? "A Caravan has arrived bearing fresh goods!" : null}
+                {this.props.caravanArrived ? "A caravan has arrived bearing fresh goods!" : null}
+                <br/>
+                <br/>
+                <br/>
+                <div>
+                    <CanvasJSChart options = {chartOptions} ref={this.chart}
+                        // onRef = {ref => this.chart = ref}
+                    />
+                </div>
             </div>
         );
     }
@@ -124,7 +218,9 @@ const mapStateToProps = (state) => {
       marketGoods: state.marketGoods,
       population: state.population,
       caravanArrived: state.caravanArrived,
-      state: state
+      date: state.date,
+      state: state,
+      analytics: state.analytics
     }
   }
   
@@ -134,7 +230,8 @@ const mapStateToProps = (state) => {
       setTransactionsAvailable, 
       setMarketGoods, 
       setCaravanArrived,
-      setState
+      setState,
+      setDateToNextDay
     }
   
   export default connect(
