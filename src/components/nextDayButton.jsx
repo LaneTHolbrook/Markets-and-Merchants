@@ -23,10 +23,10 @@ class NextDayButton extends React.Component {
                 supply: this.calculateSupply(good)
             }
         });
-        output = this.caravan(output);
+        output = this.randomEvents(output);
         this.props.setMarketGoods(output);
-        this.props.resetTransactionsAvailable();
         this.props.setDateToNextDay();
+        this.props.resetTransactionsAvailable();
     }
 
     calculateDemand(good) {
@@ -233,7 +233,7 @@ class NextDayButton extends React.Component {
         return Math.ceil(newSupply);
     }
 
-    caravan(marketGoods) {
+    randomEvents(marketGoods) {
         if (Math.floor(Math.random() * 20) === 0){
             let possibleGoods = Object.keys(marketGoods);
             let caravanSize = possibleGoods.length;

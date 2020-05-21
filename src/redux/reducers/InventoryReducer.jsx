@@ -22,17 +22,17 @@ export default function InventoryReducer(state = initialState, action = {type: n
             if (testing) {
                 var newDate = new Date(state.date.getTime());
                 if (priceFlag) {
-                    state.analytics.silk.push({x: newDate, y: marketValue({supply: state.marketGoods.silk.supply, demand: state.marketGoods.silk.demand, base: state.marketGoods.silk.basePrice})});
+                    state.analytics.silver.push({x: newDate, y: marketValue({supply: state.marketGoods.silver.supply, demand: state.marketGoods.silver.demand, base: state.marketGoods.silver.basePrice})});
+                    state.analytics.corundum.push({x: newDate, y: marketValue({supply: state.marketGoods.corundum.supply, demand: state.marketGoods.corundum.demand, base: state.marketGoods.corundum.basePrice})});
+                    state.analytics['star hazel'].push({x: newDate, y: marketValue({supply: state.marketGoods['star hazel'].supply, demand: state.marketGoods['star hazel'].demand, base: state.marketGoods['star hazel'].basePrice})});
                     state.analytics.cotton.push({x: newDate, y: marketValue({supply: state.marketGoods.cotton.supply, demand: state.marketGoods.cotton.demand, base: state.marketGoods.cotton.basePrice})});
-                    state.analytics.stone.push({x: newDate, y: marketValue({supply: state.marketGoods.stone.supply, demand: state.marketGoods.stone.demand, base: state.marketGoods.stone.basePrice})});
-                    state.analytics.chickens.push({x: newDate, y: marketValue({supply: state.marketGoods.chickens.supply, demand: state.marketGoods.chickens.demand, base: state.marketGoods.chickens.basePrice})});
-                    state.analytics.pigs.push({x: newDate, y: marketValue({supply: state.marketGoods.pigs.supply, demand: state.marketGoods.pigs.demand, base: state.marketGoods.pigs.basePrice})});
+                    state.analytics['phoenix feathers'].push({x: newDate, y: marketValue({supply: state.marketGoods['phoenix feathers'].supply, demand: state.marketGoods['phoenix feathers'].demand, base: state.marketGoods['phoenix feathers'].basePrice})});
                 } else {
-                    state.analytics.silk.push({x: newDate, y: state.marketGoods.silk.supply});
+                    state.analytics.silver.push({x: newDate, y: state.marketGoods.silver.supply});
+                    state.analytics.corundum.push({x: newDate, y: state.marketGoods.corundum.supply});
+                    state.analytics['star hazel'].push({x: newDate, y: state.marketGoods['star hazel'].supply});
                     state.analytics.cotton.push({x: newDate, y: state.marketGoods.cotton.supply});
-                    state.analytics.stone.push({x: newDate, y: state.marketGoods.stone.supply});
-                    state.analytics.chickens.push({x: newDate, y: state.marketGoods.chickens.supply});
-                    state.analytics.pigs.push({x: newDate, y: state.marketGoods.pigs.supply});
+                    state.analytics['phoenix feathers'].push({x: newDate, y: state.marketGoods['phoenix feathers'].supply});
                 }
             }
             state.date.setDate(state.date.getDate() + 1);
