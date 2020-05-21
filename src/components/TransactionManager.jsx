@@ -2,116 +2,172 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setCashOnHand,
     setMarketGoods,
-    setCaravanArrived,
-    resetTransactionsAvailable,
     setTransactionsAvailable,
     setState
  } from '../redux/actions/InventoryActions';
-import { nextDay } from './dayFunctions';
+import NextDayButton from './nextDayButton';
+import {testing, marketValue} from '../utils'
 
-let marketValue = props => {
-    let modifier = 1 + ((props.demand - props.supply) / 100);
-    if (modifier < 0.5) {modifier = 0.5};
-    return Math.floor(props.base * modifier);
-}
-
-let goodsList = props => {
-    let names = Object.keys(props.goods);
-    let output = names.map(good => {
-        let value = marketValue({base: props.goods[good].basePrice, supply: props.goods[good].supply, demand: props.goods[good].demand});
-        return <tr key = {good}>
-            <td>{good}</td>
-            <td>{props.goods[good].inventory}</td>
-            <td>{value}</td>
-            <td>{props.goods[good].supply}</td>
-            <td>{props.goods[good].demand}</td>
-            <td><button type="button" onClick={() => {
-                    if (props.transactionsAvailable > 0 && props.cashOnHand >= value && props.goods[good].supply > 0){
-                        props.setCashOnHand(props.cashOnHand - value);
-                        props.setTransactionsAvailable(props.transactionsAvailable - 1)
-                        let newGoods = props.goods;
-                        newGoods[good].inventory++;
-                        props.setMarketGoods(newGoods);
-                    }
-                }}>buy!</button></td>
-            <td><button type="button" onClick={() => {
-                    if (props.transactionsAvailable > 0 && props.goods[good].inventory > 0){
-                        props.setCashOnHand(props.cashOnHand + value);
-                        props.setTransactionsAvailable(props.transactionsAvailable - 1)
-                        let newGoods = props.goods;
-                        newGoods[good].inventory--;
-                        props.setMarketGoods(newGoods);
-                    }
-                }}>sell!</button></td>
-        </tr>
-    });
-    return (output);
-}
-
-function download(content, fileName, contentType) {
-    var a = document.createElement("a");
-    var file = new Blob([content], {type: contentType});
-    a.href = URL.createObjectURL(file);
-    a.download = fileName;
-    a.click();
-}
+import CanvasJSReact from '../canvasjs.react';
+//var CanvasJSReact = require('./canvasjs.react');
+var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class TransactionManager extends React.Component {
+
+    download(state, fileName, contentType) {
+        let content = {...state, date: state.date.toJSON()}
+        content = JSON.stringify(content);
+        var a = document.createElement("a");
+        var file = new Blob([content], {type: contentType});
+        a.href = URL.createObjectURL(file);
+        a.download = fileName;
+        a.click();
+    }
 
     onFileChange = event => {
             const reader = new FileReader();
             reader.addEventListener('load', (event) => {
-                this.props.setState(JSON.parse(event.target.result));
+                let newState = JSON.parse(event.target.result);
+                newState = {...newState, date: new Date(newState.date)}
+                this.props.setState(newState);
             });
             reader.readAsText(event.target.files[0]);
             event.target.value = "";
-      };
+    };
+
+    goodsList = () => {
+        let names = Object.keys(this.props.marketGoods);
+        let output = names.map(good => {
+            let value = marketValue({base: this.props.marketGoods[good].basePrice, supply: this.props.marketGoods[good].supply, demand: this.props.marketGoods[good].demand});
+            return <tr key = {good}>
+                <td>{good}</td>
+                <td>{this.props.marketGoods[good].inventory}</td>
+                <td>{value}</td>
+                <td>{testing ? this.props.marketGoods[good].supply : null}</td>
+                <td>{testing ? this.props.marketGoods[good].demand : null}</td>
+                <td><button type="button" onClick={() => {
+                        if (this.props.transactionsAvailable > 0 && this.props.cashOnHand >= value && this.props.marketGoods[good].supply > 0){
+                            this.props.setCashOnHand(this.props.cashOnHand - value);
+                            this.props.setTransactionsAvailable(this.props.transactionsAvailable - 1)
+                            let newGoods = this.props.marketGoods;
+                            newGoods[good].inventory++;
+                            this.props.setMarketGoods(newGoods);
+                        }
+                    }}>buy!</button></td>
+                <td><button type="button" onClick={() => {
+                        if (this.props.transactionsAvailable > 0 && this.props.marketGoods[good].inventory > 0){
+                            this.props.setCashOnHand(this.props.cashOnHand + value);
+                            this.props.setTransactionsAvailable(this.props.transactionsAvailable - 1)
+                            let newGoods = this.props.marketGoods;
+                            newGoods[good].inventory--;
+                            this.props.setMarketGoods(newGoods);
+                        }
+                    }}>sell!</button></td>
+            </tr>
+        });
+        return (output);
+    }
 
     render() {
+        var chartOptions = {}
+        if (testing) {
+            chartOptions = {
+                theme: "light2",
+                title: {
+                    text: "price of goods at various rarities over time"
+                },
+                axisY: {
+                    title: "dollar value per unit",
+                    prefix: "$",
+                    includeZero: true
+                },
+                legend: {
+                    fontColor: 'green'
+                },
+                data: [{
+                    type: "line",
+                    lineColor: 'red',
+                    xValueFormatString: "MMM YYYY",
+                    yValueFormatString: "$#,##0.00",
+                    name: "silk",
+                    dataPoints: this.props.analytics.silk
+                },
+                {
+                    type: "line",
+                    lineColor: 'orange',
+                    xValueFormatString: "MMM YYYY",
+                    yValueFormatString: "$#,##0.00",
+                    name: "cotton",
+                    dataPoints: this.props.analytics.cotton
+                },
+                {
+                    type: "line",
+                    lineColor: 'yellow',
+                    xValueFormatString: "MMM YYYY",
+                    yValueFormatString: "$#,##0.00",
+                    name: "stone",
+                    dataPoints: this.props.analytics.stone
+                },
+                {
+                    type: "line",
+                    lineColor: 'green',
+                    xValueFormatString: "MMM YYYY",
+                    yValueFormatString: "$#,##0.00",
+                    name: "chickens",
+                    dataPoints: this.props.analytics.chickens
+                },
+                {
+                    type: "line",
+                    lineColor: 'blue',
+                    xValueFormatString: "MMM YYYY",
+                    yValueFormatString: "$#,##0.00",
+                    name: "pigs",
+                    dataPoints: this.props.analytics.pigs
+                }
+            ]
+            }
+        }
+
         return (
             <div>
+                <div>Today is {this.props.date.toDateString()}</div>
                 <table>
                     <thead><tr>
                         <th>Name</th>
                         <th>inventory</th>
                         <th>price</th>
-                        <th>supply</th>
-                        <th>demand</th>
+                        {testing ? <th>supply</th> : null}
+                        {testing ? <th>demand</th> : null}
                     </tr></thead>
-                    <tbody>{goodsList({goods: this.props.marketGoods, 
-                        transactionsAvailable: this.props.transactionsAvailable, 
-                        cashOnHand: this.props.cashOnHand,
-                        setCashOnHand: this.props.setCashOnHand, 
-                        setTransactionsAvailable: this.props.setTransactionsAvailable,
-                        setMarketGoods: this.props.setMarketGoods})}
+                    <tbody>{this.goodsList()}
                     </tbody>
                 </table>
                 <div>You have ${this.props.cashOnHand} and {this.props.transactionsAvailable} transactions available!</div> 
-                <button type="button" onClick={() => 
-                    nextDay({
-                        population: this.props.population,
-                        marketGoods: this.props.marketGoods, 
-                        setCaravanArrived: this.props.setCaravanArrived,
-                        setMarketGoods: this.props.setMarketGoods,
-                        resetTransactionsAvailable: this.props.resetTransactionsAvailable}
-                    )}>
-                            Next Day
-                </button>
+                <NextDayButton/>
                 <br/>
                 <br/>
                 <br/>   
-                <button class="file-io-button" type="button" onClick={() => download(JSON.stringify(this.props.state), 'marketState.json', 'application/json')}>
+                <button className="file-io-button" type="button" onClick={() => this.download(this.props.state, 'marketState.json', 'application/json')}>
                     Download market state
                 </button>
                 <br/>
                 <br/>
-                <label for="file-upload" class="file-io-button">
+                <label htmlFor="file-upload" className="file-io-button">
                     <input id="file-upload" type="file" onChange={this.onFileChange}/> 
                     Upload previous market state
                 </label>
                 <br/>
                 <br/>
-                {this.props.caravanArrived ? "A Caravan has arrived bearing fresh goods!" : null}
+                {this.props.caravanArrived ? "A caravan has arrived bearing fresh goods!" : null}
+                <br/>
+                <br/>
+                <br/>
+                {testing ? <div>
+                    <CanvasJSChart options = {chartOptions} ref={this.chart}
+                        // onRef = {ref => this.chart = ref}
+                    />
+                </div> : null}
             </div>
         );
     }
@@ -122,18 +178,17 @@ const mapStateToProps = (state) => {
       cashOnHand: state.cashOnHand,
       transactionsAvailable: state.transactionsAvailable,
       marketGoods: state.marketGoods,
-      population: state.population,
       caravanArrived: state.caravanArrived,
-      state: state
+      date: state.date,
+      state: state,
+      analytics: state.analytics
     }
   }
   
   const mapDispatchToProps = { 
-      setCashOnHand, 
-      resetTransactionsAvailable,
+      setCashOnHand,
       setTransactionsAvailable, 
-      setMarketGoods, 
-      setCaravanArrived,
+      setMarketGoods,
       setState
     }
   
