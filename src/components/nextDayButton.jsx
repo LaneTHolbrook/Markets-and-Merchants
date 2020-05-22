@@ -4,11 +4,9 @@ import { setCashOnHand,
     setMarketGoods,
     setCaravanArrived,
     resetTransactionsAvailable,
-    setTransactionsAvailable,
-    setState,
     setDateToNextDay
  } from '../redux/actions/InventoryActions';
-import {rollD6} from '../utils'
+import {rollD6, marketValue} from '../utils'
 
 class NextDayButton extends React.Component {
 
@@ -17,10 +15,20 @@ class NextDayButton extends React.Component {
         let output = {};
         let names = Object.keys(this.props.marketGoods);
         names.forEach(good => {
+            let newDemand = this.calculateDemand(good);
+            let newSupply = this.calculateSupply(good);
+            let newPrice = marketValue({demand: newDemand, supply: newSupply, base: this.props.marketGoods[good].basePrice});
+            if ((newPrice - this.props.marketGoods[good].marketValue) > (this.props.marketGoods[good].basePrice)) {
+                newPrice = this.props.marketGoods[good].marketValue + (this.props.marketGoods[good].basePrice);
+            };
+            if ((newPrice - this.props.marketGoods[good].marketValue) < -(this.props.marketGoods[good].basePrice)) {
+                newPrice = this.props.marketGoods[good].marketValue + -(this.props.marketGoods[good].basePrice);
+            };
             output[good] = {
                 ...this.props.marketGoods[good],
-                demand: this.calculateDemand(good),
-                supply: this.calculateSupply(good)
+                marketValue: newPrice,
+                demand: newDemand,
+                supply: newSupply
             }
         });
         output = this.caravan(output);

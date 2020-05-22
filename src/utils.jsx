@@ -1,4 +1,4 @@
-export const testing = true;
+export const testing = false;
 
 export const marketValue = props => {
     let modifier = ((1+props.demand) / (1+props.supply));

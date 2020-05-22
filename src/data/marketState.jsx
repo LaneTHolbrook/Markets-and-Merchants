@@ -2,13 +2,14 @@ export default {
     "analytics": {"silver": [], "corundum": [], "star hazel": [], "cotton": [], "phoenix feathers": []},
     "date": "June 11, 1523",
     "caravanArrived": false,
-    "cashOnHand": 0,
+    "cashOnHand": 2000,
     "transactionsAvailable": 5,
     "maxTransactions": 5,
     "population": 500,
     "marketGoods": {
         "tin": {
             "basePrice": 50,
+            "marketValue": 50,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -16,6 +17,7 @@ export default {
         },
         "copper": {
             "basePrice": 150,
+            "marketValue": 150,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -23,6 +25,7 @@ export default {
         },
         "iron": {
             "basePrice": 450,
+            "marketValue": 450,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -30,6 +33,7 @@ export default {
         },
         "silver": {
             "basePrice": 1350,
+            "marketValue": 1350,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -37,6 +41,7 @@ export default {
         },
         "gold": {
             "basePrice": 4050,
+            "marketValue": 4050,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -44,6 +49,7 @@ export default {
         },
         "quartz": {
             "basePrice": 50,
+            "marketValue": 50,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -51,6 +57,7 @@ export default {
         },
         "beryl": {
             "basePrice": 150,
+            "marketValue": 150,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -58,6 +65,7 @@ export default {
         },
         "topaz": {
             "basePrice": 450,
+            "marketValue": 450,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -65,6 +73,7 @@ export default {
         },
         "corundum": {
             "basePrice": 1350,
+            "marketValue": 1350,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -72,6 +81,7 @@ export default {
         },
         "diamond": {
             "basePrice": 4050,
+            "marketValue": 4050,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -79,6 +89,7 @@ export default {
         },
         "mana leaf": {
             "basePrice": 50,
+            "marketValue": 50,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -86,6 +97,7 @@ export default {
         },
         "giant's blood": {
             "basePrice": 150,
+            "marketValue": 150,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -93,13 +105,15 @@ export default {
         },
         "god's eye": {
             "basePrice": 450,
+            "marketValue": 450,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
             "availability": 0
         },
         "star hazel": {
-            "basePrice":1350,
+            "basePrice": 1350,
+            "marketValue": 1350,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -107,6 +121,7 @@ export default {
         },
         "unicorn hair": {
             "basePrice": 4050,
+            "marketValue": 4050,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -114,6 +129,7 @@ export default {
         },
         "wool": {
             "basePrice": 50,
+            "marketValue": 50,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -121,6 +137,7 @@ export default {
         },
         "leather": {
             "basePrice": 150,
+            "marketValue": 150,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -128,6 +145,7 @@ export default {
         },
         "linen": {
             "basePrice": 450,
+            "marketValue": 450,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -135,6 +153,7 @@ export default {
         },
         "cotton": {
             "basePrice": 1350,
+            "marketValue": 1350,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -142,6 +161,7 @@ export default {
         },
         "silk": {
             "basePrice": 4050,
+            "marketValue": 4050,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -149,6 +169,7 @@ export default {
         },
         "gargantula venom": {
             "basePrice": 50,
+            "marketValue": 50,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -156,6 +177,7 @@ export default {
         },
         "Fairy dragon dust": {
             "basePrice": 150,
+            "marketValue": 150,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -163,6 +185,7 @@ export default {
         },
         "unicorn hair (actual)": {
             "basePrice": 450,
+            "marketValue": 450,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -170,6 +193,7 @@ export default {
         },
         "phoenix feathers": {
             "basePrice": 1350,
+            "marketValue": 1350,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
@@ -177,6 +201,7 @@ export default {
         },
         "kraken ink": {
             "basePrice": 4050,
+            "marketValue": 4050,
             "demand": 500,
             "supply": 500,
             "inventory": 0,

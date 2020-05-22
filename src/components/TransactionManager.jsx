@@ -6,7 +6,7 @@ import { setCashOnHand,
     setState
  } from '../redux/actions/InventoryActions';
 import NextDayButton from './nextDayButton';
-import {testing, marketValue} from '../utils'
+import {testing} from '../utils'
 
 import CanvasJSReact from '../canvasjs.react';
 //var CanvasJSReact = require('./canvasjs.react');
@@ -39,15 +39,15 @@ class TransactionManager extends React.Component {
     goodsList = () => {
         let names = Object.keys(this.props.marketGoods);
         let output = names.map(good => {
-            let value = marketValue({base: this.props.marketGoods[good].basePrice, supply: this.props.marketGoods[good].supply, demand: this.props.marketGoods[good].demand});
+            let value = this.props.marketGoods[good].marketValue;
             return <tr key = {good}>
                 <td>{good}</td>
                 <td>{this.props.marketGoods[good].inventory}</td>
                 <td>{value}</td>
-                <td>{testing ? this.props.marketGoods[good].supply : null}</td>
-                <td>{testing ? this.props.marketGoods[good].demand : null}</td>
+                {testing ? <td>{this.props.marketGoods[good].supply}</td> : null}
+                {testing ? <td>{this.props.marketGoods[good].demand}</td> : null}
                 <td><button type="button" onClick={() => {
-                        if (this.props.transactionsAvailable > 0 && this.props.cashOnHand >= value && this.props.marketGoods[good].supply > 0){
+                        if (this.props.transactionsAvailable > 0 && this.props.cashOnHand >= value){
                             this.props.setCashOnHand(this.props.cashOnHand - value);
                             this.props.setTransactionsAvailable(this.props.transactionsAvailable - 1)
                             let newGoods = this.props.marketGoods;

@@ -22,11 +22,11 @@ export default function InventoryReducer(state = initialState, action = {type: n
             if (testing) {
                 var newDate = new Date(state.date.getTime());
                 if (priceFlag) {
-                    state.analytics.silver.push({x: newDate, y: marketValue({supply: state.marketGoods.silver.supply, demand: state.marketGoods.silver.demand, base: state.marketGoods.silver.basePrice})});
-                    state.analytics.corundum.push({x: newDate, y: marketValue({supply: state.marketGoods.corundum.supply, demand: state.marketGoods.corundum.demand, base: state.marketGoods.corundum.basePrice})});
-                    state.analytics['star hazel'].push({x: newDate, y: marketValue({supply: state.marketGoods['star hazel'].supply, demand: state.marketGoods['star hazel'].demand, base: state.marketGoods['star hazel'].basePrice})});
-                    state.analytics.cotton.push({x: newDate, y: marketValue({supply: state.marketGoods.cotton.supply, demand: state.marketGoods.cotton.demand, base: state.marketGoods.cotton.basePrice})});
-                    state.analytics['phoenix feathers'].push({x: newDate, y: marketValue({supply: state.marketGoods['phoenix feathers'].supply, demand: state.marketGoods['phoenix feathers'].demand, base: state.marketGoods['phoenix feathers'].basePrice})});
+                    state.analytics.silver.push({x: newDate, y: state.marketGoods.silver.marketValue});
+                    state.analytics.corundum.push({x: newDate, y: state.marketGoods.corundum.marketValue});
+                    state.analytics['star hazel'].push({x: newDate, y: state.marketGoods['star hazel'].marketValue});
+                    state.analytics.cotton.push({x: newDate, y: state.marketGoods.cotton.marketValue});
+                    state.analytics['phoenix feathers'].push({x: newDate, y: state.marketGoods['phoenix feathers'].marketValue});
                 } else {
                     state.analytics.silver.push({x: newDate, y: state.marketGoods.silver.supply});
                     state.analytics.corundum.push({x: newDate, y: state.marketGoods.corundum.supply});
