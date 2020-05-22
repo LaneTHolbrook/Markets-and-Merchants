@@ -9,15 +9,12 @@ darkseagreen
 darkolivegreen
 */
 @font-face {font-family: StitchWarrior; src: url('assets/StitchWarrior-38AX.ttf')}
-@font-face {font-family: TurretRoad; src: url('assets/TurretRoad-Medium.ttf')}
+@font-face {font-family: TurretRoad; src: url('assets/TurretRoad-Bold.ttf')}
 
 body {
-  margin: 0;
-  font-family: TurretRoad, impact, sans-serif;
+  margin: 0; 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  background-color: Beige;
 }
 
 h1, h2, h3 {
@@ -30,12 +27,18 @@ code {
 }
 
 #root {
+  font-family: TurretRoad, sans-serif;
+  letter-spacing: 0.1em;
+  background-color: Beige;
   padding: 20px;
+  height: auto;
   border:  40px solid darkred;
   border-image-source: url(assets/TapestryBorderWheelVineStar.png);
   /* border-image-width: 20px; */
   border-image-slice: 40;
   border-image-repeat: round;
+  background-image: url(assets/BeigePixels.png);
+  /* background-repeat: no-repeat; */
 }
 
 table{
@@ -50,17 +53,18 @@ thead tr th{
 
 td {
   border: 2px dashed cadetblue;
-  padding-left: 5px;
   padding: 5px;
 }
 
-td > button {
+td button {
   background-color: gold;
   border: none;
-  width: auto;
-  height: 30px;
-  display: block;
+  width: 60px;
+  height: 40px;
   margin: -5px;
+}
+td button:hover {
+  background-color: CadetBlue;
 }
 
 input[type="file"] {
