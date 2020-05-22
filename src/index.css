@@ -1,3 +1,14 @@
+/* Colors 
+Beige
+Gold
+saddlebrown
+DarkRed
+CadetBlue
+darkslategray
+darkseagreen
+darkolivegreen
+*/
+
 body {
   margin: 0;
   font-family: 'Turret Road', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -22,12 +33,15 @@ code {
 
 #root {
   padding: 20px;
-  border:  10px solid DarkRed;
+  border:  40px solid darkred;
+  border-image-source: url(tapestryBorder.png);
+  /* border-image-width: 20px; */
+  border-image-slice: 35;
+  border-image-repeat: round;
 }
 
-td {
-  border: 1px dashed cadetblue;
-  padding: 5px;
+table{
+  margin-bottom: 10px;
 }
 
 thead tr th{
@@ -36,20 +50,27 @@ thead tr th{
   padding-right: 10px;
 }
 
-/* Colors 
-Beige
-Brown
-CadetBlue
-DarkRed
-GoldenRod
+td {
+  border: 2px dashed cadetblue;
+  padding-left: 5px;
+  padding: 5px;
+}
 
-*/
+td > button {
+  background-color: gold;
+  border: none;
+  width: auto;
+  height: 30px;
+  display: block;
+  margin: -5px;
+}
+
 input[type="file"] {
   display: none;
 }
 
 .file-io-button {
-  background-color: rgb(76, 173, 79); /* Green */
+  background-color: darkolivegreen;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -60,5 +81,5 @@ input[type="file"] {
 }
 
 .file-io-button:hover {
-  background-color: rgb(99, 221, 104); /* LightGreen */
+  background-color:darkseagreen; 
 }
