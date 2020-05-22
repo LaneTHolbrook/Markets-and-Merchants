@@ -5,13 +5,14 @@ import { setCashOnHand,
     setTransactionsAvailable,
     setState
  } from '../redux/actions/InventoryActions';
-import NextDayButton from './nextDayButton';
-import {testing} from '../utils'
+import NextDayButton from './NextDayButton';
+import {testing} from '../utils';
+import { Line } from 'react-chartjs-2';
 
-import CanvasJSReact from '../canvasjs.react';
-//var CanvasJSReact = require('./canvasjs.react');
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+// import CanvasJSReact from '../canvasjs.react';
+// //var CanvasJSReact = require('./canvasjs.react');
+// var CanvasJS = CanvasJSReact.CanvasJS;
+// var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class TransactionManager extends React.Component {
 
@@ -70,61 +71,117 @@ class TransactionManager extends React.Component {
     }
 
     render() {
-        var chartOptions = {}
-        if (testing) {
-            chartOptions = {
-                theme: "light2",
-                title: {
-                    text: "price of goods at various rarities over time"
+        var chartData
+        if(testing) {
+            console.log(this.props.analytics.date);
+            chartData = {
+                labels: Object.keys(this.props.analytics.date),
+                datasets: [
+                {
+                    label: 'silver',
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: 'blue',
+                    borderColor: 'blue',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'blue',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.props.analytics.silver
                 },
-                axisY: {
-                    title: "dollar value per unit",
-                    prefix: "$",
-                    includeZero: true
+                {
+                    label: 'corundum',
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: 'green',
+                    borderColor: 'green',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'green',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.props.analytics.corundum
                 },
-                legend: {
-                    fontColor: 'green'
+                {
+                    label: 'star hazel',
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: 'yellow',
+                    borderColor: 'yellow',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'yellow',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.props.analytics['star hazel']
                 },
-                data: [{
-                        type: "line",
-                        lineColor: 'blue',
-                        xValueFormatString: "MMM YYYY",
-                        yValueFormatString: "$#,##0.00",
-                        name: "silver",
-                        dataPoints: this.props.analytics.silver
-                    },
-                    {
-                        type: "line",
-                        lineColor: 'green',
-                        xValueFormatString: "MMM YYYY",
-                        yValueFormatString: "$#,##0.00",
-                        name: "corundum",
-                        dataPoints: this.props.analytics.corundum
-                    },
-                    {
-                        type: "line",
-                        lineColor: 'yellow',
-                        xValueFormatString: "MMM YYYY",
-                        yValueFormatString: "$#,##0.00",
-                        name: "star hazel",
-                        dataPoints: this.props.analytics['star hazel']
-                    },
-                    {
-                        type: "line",
-                        lineColor: 'orange',
-                        xValueFormatString: "MMM YYYY",
-                        yValueFormatString: "$#,##0.00",
-                        name: "cotton",
-                        dataPoints: this.props.analytics.cotton
-                    },
-                    {
-                        type: "line",
-                        lineColor: 'red',
-                        xValueFormatString: "MMM YYYY",
-                        yValueFormatString: "$#,##0.00",
-                        name: "phoenix feathers",
-                        dataPoints: this.props.analytics['phoenix feathers']
-                    }
+                {
+                    label: 'cotton',
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: 'orange',
+                    borderColor: 'orange',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'orange',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.props.analytics.cotton
+                },
+                {
+                    label: 'phoenix feathers',
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: 'red',
+                    borderColor: 'red',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'red',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.props.analytics['phoenix feathers']
+                },
                 ]
             }
         }
@@ -164,9 +221,7 @@ class TransactionManager extends React.Component {
                 <br/>
                 <br/>
                 {testing ? <div>
-                    <CanvasJSChart options = {chartOptions} ref={this.chart}
-                        // onRef = {ref => this.chart = ref}
-                    />
+                    <Line data={chartData}/>
                 </div> : null}
             </div>
         );

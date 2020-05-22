@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setCashOnHand,
+import { 
     setMarketGoods,
     setCaravanArrived,
     resetTransactionsAvailable,
@@ -18,11 +18,11 @@ class NextDayButton extends React.Component {
             let newDemand = this.calculateDemand(good);
             let newSupply = this.calculateSupply(good);
             let newPrice = marketValue({demand: newDemand, supply: newSupply, base: this.props.marketGoods[good].basePrice});
-            if ((newPrice - this.props.marketGoods[good].marketValue) > (this.props.marketGoods[good].basePrice)) {
-                newPrice = this.props.marketGoods[good].marketValue + (this.props.marketGoods[good].basePrice);
+            if (newPrice > this.props.marketGoods[good].marketValue * 1.01) {
+                newPrice = Math.floor(this.props.marketGoods[good].marketValue * 1.01);
             };
-            if ((newPrice - this.props.marketGoods[good].marketValue) < -(this.props.marketGoods[good].basePrice)) {
-                newPrice = this.props.marketGoods[good].marketValue + -(this.props.marketGoods[good].basePrice);
+            if (newPrice < this.props.marketGoods[good].marketValue * .99) {
+                newPrice = Math.floor(this.props.marketGoods[good].marketValue * .99);
             };
             output[good] = {
                 ...this.props.marketGoods[good],
@@ -236,7 +236,7 @@ class NextDayButton extends React.Component {
 
         let newSupply = this.props.marketGoods[good].supply + result;
     
-        if (newSupply < Math.floor(this.props.population * .1)) {newSupply = Math.floor(this.props.population * .1)};
+        if (newSupply < 1) newSupply = 1;//Math.floor(this.props.population * .1)) {newSupply = Math.floor(this.props.population * .1)};
 
         return Math.ceil(newSupply);
     }

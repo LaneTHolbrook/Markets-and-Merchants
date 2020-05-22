@@ -1,5 +1,5 @@
 export default {
-    "analytics": {"silver": [], "corundum": [], "star hazel": [], "cotton": [], "phoenix feathers": []},
+    "analytics": {"date": [], "silver": [], "corundum": [], "star hazel": [], "cotton": [], "phoenix feathers": []},
     "date": "June 11, 1523",
     "caravanArrived": false,
     "cashOnHand": 2000,
