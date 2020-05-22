@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import InventoryReducer from './redux/reducers/InventoryReducer'
 import App from './App'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const store = createStore(InventoryReducer);
 
