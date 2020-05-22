@@ -86,46 +86,46 @@ class TransactionManager extends React.Component {
                     fontColor: 'green'
                 },
                 data: [{
-                    type: "line",
-                    lineColor: 'red',
-                    xValueFormatString: "MMM YYYY",
-                    yValueFormatString: "$#,##0.00",
-                    name: "silk",
-                    dataPoints: this.props.analytics.silk
-                },
-                {
-                    type: "line",
-                    lineColor: 'orange',
-                    xValueFormatString: "MMM YYYY",
-                    yValueFormatString: "$#,##0.00",
-                    name: "cotton",
-                    dataPoints: this.props.analytics.cotton
-                },
-                {
-                    type: "line",
-                    lineColor: 'yellow',
-                    xValueFormatString: "MMM YYYY",
-                    yValueFormatString: "$#,##0.00",
-                    name: "stone",
-                    dataPoints: this.props.analytics.stone
-                },
-                {
-                    type: "line",
-                    lineColor: 'green',
-                    xValueFormatString: "MMM YYYY",
-                    yValueFormatString: "$#,##0.00",
-                    name: "chickens",
-                    dataPoints: this.props.analytics.chickens
-                },
-                {
-                    type: "line",
-                    lineColor: 'blue',
-                    xValueFormatString: "MMM YYYY",
-                    yValueFormatString: "$#,##0.00",
-                    name: "pigs",
-                    dataPoints: this.props.analytics.pigs
-                }
-            ]
+                        type: "line",
+                        lineColor: 'blue',
+                        xValueFormatString: "MMM YYYY",
+                        yValueFormatString: "$#,##0.00",
+                        name: "silver",
+                        dataPoints: this.props.analytics.silver
+                    },
+                    {
+                        type: "line",
+                        lineColor: 'green',
+                        xValueFormatString: "MMM YYYY",
+                        yValueFormatString: "$#,##0.00",
+                        name: "corundum",
+                        dataPoints: this.props.analytics.corundum
+                    },
+                    {
+                        type: "line",
+                        lineColor: 'yellow',
+                        xValueFormatString: "MMM YYYY",
+                        yValueFormatString: "$#,##0.00",
+                        name: "star hazel",
+                        dataPoints: this.props.analytics['star hazel']
+                    },
+                    {
+                        type: "line",
+                        lineColor: 'orange',
+                        xValueFormatString: "MMM YYYY",
+                        yValueFormatString: "$#,##0.00",
+                        name: "cotton",
+                        dataPoints: this.props.analytics.cotton
+                    },
+                    {
+                        type: "line",
+                        lineColor: 'red',
+                        xValueFormatString: "MMM YYYY",
+                        yValueFormatString: "$#,##0.00",
+                        name: "phoenix feathers",
+                        dataPoints: this.props.analytics['phoenix feathers']
+                    }
+                ]
             }
         }
 

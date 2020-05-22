@@ -25,8 +25,8 @@ class NextDayButton extends React.Component {
         });
         output = this.caravan(output);
         this.props.setMarketGoods(output);
-        this.props.resetTransactionsAvailable();
         this.props.setDateToNextDay();
+        this.props.resetTransactionsAvailable();
     }
 
     calculateDemand(good) {

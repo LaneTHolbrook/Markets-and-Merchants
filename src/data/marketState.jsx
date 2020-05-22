@@ -1,5 +1,5 @@
 export default {
-    "analytics": {"silk": [], "cotton": [], "stone": [], "chickens": [], "pigs": []},
+    "analytics": {"silver": [], "corundum": [], "star hazel": [], "cotton": [], "phoenix feathers": []},
     "date": "June 11, 1523",
     "caravanArrived": false,
     "cashOnHand": 0,
@@ -7,201 +7,180 @@ export default {
     "maxTransactions": 5,
     "population": 500,
     "marketGoods": {
-        "silk": {
-            "basePrice": 1000,
+        "tin": {
+            "basePrice": 50,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
-            "availability": -2
+            "availability": +2
+        },
+        "copper": {
+            "basePrice": 150,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": +2
+        },
+        "iron": {
+            "basePrice": 450,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": +2
+        },
+        "silver": {
+            "basePrice": 1350,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": +2
+        },
+        "gold": {
+            "basePrice": 4050,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": +2
+        },
+        "quartz": {
+            "basePrice": 50,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": +1
+        },
+        "beryl": {
+            "basePrice": 150,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": +1
+        },
+        "topaz": {
+            "basePrice": 450,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": +1
+        },
+        "corundum": {
+            "basePrice": 1350,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": +1
+        },
+        "diamond": {
+            "basePrice": 4050,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": +1
+        },
+        "mana leaf": {
+            "basePrice": 50,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": 0
+        },
+        "giant's blood": {
+            "basePrice": 150,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": 0
+        },
+        "god's eye": {
+            "basePrice": 450,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": 0
+        },
+        "star hazel": {
+            "basePrice":1350,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": 0
+        },
+        "unicorn hair": {
+            "basePrice": 4050,
+            "demand": 500,
+            "supply": 500,
+            "inventory": 0,
+            "availability": 0
         },
         "wool": {
-            "basePrice": 200,
+            "basePrice": 50,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
-            "availability": -4
+            "availability": -1
         },
-        "cotton": {
-            "basePrice": 1000,
+        "leather": {
+            "basePrice": 150,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
             "availability": -1
         },
         "linen": {
-            "basePrice": 400,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": -2
-        },
-        "gold": {
-            "basePrice": 100,
+            "basePrice": 450,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
             "availability": -1
         },
-        "glass": {
-            "basePrice": 200,
+        "cotton": {
+            "basePrice": 1350,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
-            "availability": 0
+            "availability": -1
         },
-        "gemstones": {
-            "basePrice": 300,
+        "silk": {
+            "basePrice": 4050,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
-            "availability": 1
+            "availability": -1
         },
-        "coffee": {
-            "basePrice": 400,
+        "gargantula venom": {
+            "basePrice": 50,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
-            "availability": 2
+            "availability": -2
         },
-        "chickens": {
-            "basePrice": 1000,
+        "Fairy dragon dust": {
+            "basePrice": 150,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
-            "availability": 1
+            "availability": -2
         },
-        "goats": {
-            "basePrice": 200,
+        "unicorn hair (actual)": {
+            "basePrice": 450,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
-            "availability": 4
+            "availability": -2
         },
-        "pigs": {
-            "basePrice": 1000,
+        "phoenix feathers": {
+            "basePrice": 1350,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
-            "availability": 2
+            "availability": -2
         },
-        "exotic animals": {
-            "basePrice": 400,
+        "kraken ink": {
+            "basePrice": 4050,
             "demand": 500,
             "supply": 500,
             "inventory": 0,
-            "availability": 0
+            "availability": -2
         },
-        "wood": {
-            "basePrice": 100,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "stone": {
-            "basePrice": 1000,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "copper": {
-            "basePrice": 300,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "iron": {
-            "basePrice": 400,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "winter mint": {
-            "basePrice": 100,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "summer spice": {
-            "basePrice": 200,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "harvest truffle": {
-            "basePrice": 300,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "spring down": {
-            "basePrice": 400,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-                "availability": 0
-            },
-        "swords": {
-            "basePrice": 100,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "knives": {
-            "basePrice": 200,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "bows": {
-            "basePrice": 300,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "polearms": {
-            "basePrice": 400,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "shields": {
-            "basePrice": 100,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "leathers": {
-            "basePrice": 200,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "chainmail": {
-            "basePrice": 300,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 0
-        },
-        "platemail": {
-            "basePrice": 400,
-            "demand": 500,
-            "supply": 500,
-            "inventory": 0,
-            "availability": 5
-        }
     }
 }
